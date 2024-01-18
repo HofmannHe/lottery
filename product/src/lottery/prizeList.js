@@ -15,7 +15,7 @@ const DEFAULT_MESS = [
   "新年，祝福大家事事顺遂。",
   "作为专业陪跑的我，我就看看你们有谁跟我一样",
   "新的一年祝福大家越来越好！",
-  "来年再战！！！"
+  "来年再战！！！",
 ];
 
 let lastDanMuList = [];
@@ -26,7 +26,7 @@ class DanMu {
   constructor(option) {
     if (typeof option !== "object") {
       option = {
-        text: option
+        text: option,
       };
     }
 
@@ -54,7 +54,7 @@ class DanMu {
   start(text) {
     let speed = ~~(Math.random() * 10000) + 6000;
     this.position = {
-      x: MAX_WIDTH
+      x: MAX_WIDTH,
     };
     let delay = speed / 10;
 
@@ -65,7 +65,7 @@ class DanMu {
     this.tween = new TWEEN.Tween(this.position)
       .to(
         {
-          x: -this.width
+          x: -this.width,
         },
         speed
       )
@@ -87,7 +87,7 @@ class Qipao {
   constructor(option) {
     if (typeof option !== "object") {
       option = {
-        text: option
+        text: option,
       };
     }
 
@@ -129,23 +129,25 @@ class Qipao {
   }
 }
 
-let addQipao = (() => {
-  let qipaoList = [];
-  return function (text) {
-    let qipao;
-    if (qipaoList.length > 0) {
-      qipao = qipaoList.shift();
-    } else {
-      qipao = new Qipao({
-        onComplete() {
-          qipaoList.push(qipao);
-        }
-      });
-    }
+function addQipao(text) {}
 
-    qipao.start(text);
-  };
-})();
+// let addQipao = (() => {
+//   let qipaoList = [];
+//   return function (text) {
+//     let qipao;
+//     if (qipaoList.length > 0) {
+//       qipao = qipaoList.shift();
+//     } else {
+//       qipao = new Qipao({
+//         onComplete() {
+//           qipaoList.push(qipao);
+//         }
+//       });
+//     }
+
+//     qipao.start(text);
+//   };
+// })();
 
 function setPrizes(pri) {
   prizes = pri;
@@ -158,39 +160,44 @@ function showPrizeList(currentPrizeIndex) {
   if (currentPrize.type === defaultType) {
     currentPrize.count === "不限制";
   }
-  let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list">`;
-  prizes.forEach(item => {
-    if (item.type === defaultType) {
-      return true;
-    }
-    htmlCode += `<li id="prize-item-${item.type}" class="prize-item ${
-      item.type == currentPrize.type ? "shine" : ""
-    }">
-                        <span></span><span></span><span></span><span></span>
-                        <div class="prize-img">
-                            <img src="${item.img}" alt="${item.title}">
-                        </div>
-                        <div class="prize-text">
-                            <h5 class="prize-title">${item.text} ${
-      item.title
-    }</h5>
-                            <div class="prize-count">
-                                <div class="progress">
-                                    <div id="prize-bar-${
-                                      item.type
-                                    }" class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 100%;">
-                                    </div>
-                                </div>
-                                <div id="prize-count-${
-                                  item.type
-                                }" class="prize-count-left">
-                                    ${item.count + "/" + item.count}
-                                </div>
-                            </div>
-                        </div>
-                    </li>`;
-  });
-  htmlCode += `</ul>`;
+
+  let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list"></ul>`;
+
+  // let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list">`;
+  // prizes.forEach(item => {
+  //   if (item.type === defaultType) {
+  //     return true;
+  //   }
+  //   htmlCode += `<li id="prize-item-${item.type}" class="prize-item ${
+  //     item.type == currentPrize.type ? "shine" : ""
+  //   }">
+  //                       <!--
+  //                       <span></span><span></span><span></span><span></span>
+  //                       <div class="prize-img">
+  //                           <img src="${item.img}" alt="${item.title}">
+  //                       </div>
+  //                       -->
+  //                       <!--
+  //                       <div class="prize-text">
+  //                           <h5 class="prize-title">${item.text}<!--${item.title}--></h5>
+  //                           <div class="prize-count">
+  //                               <div class="progress">
+  //                                   <div id="prize-bar-${
+  //                                     item.type
+  //                                   }" class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 100%;">
+  //                                   </div>
+  //                               </div>
+  //                               <div id="prize-count-${
+  //                                 item.type
+  //                               }" class="prize-count-left">
+  //                                   ${item.count + "/" + item.count}
+  //                               </div>
+  //                           </div>
+  //                       </div>
+  //                       -->
+  //                   </li>`;
+  // });
+  // htmlCode += `</ul>`;
 
   document.querySelector("#prizeBar").innerHTML = htmlCode;
 }
@@ -208,14 +215,14 @@ let setPrizeData = (function () {
       elements = prizeElement[type],
       totalCount = currentPrize.count;
 
-    if (!elements) {
-      elements = {
-        box: document.querySelector(`#prize-item-${type}`),
-        bar: document.querySelector(`#prize-bar-${type}`),
-        text: document.querySelector(`#prize-count-${type}`)
-      };
-      prizeElement[type] = elements;
-    }
+    // if (!elements) {
+    //   elements = {
+    //     box: document.querySelector(`#prize-item-${type}`),
+    //     bar: document.querySelector(`#prize-bar-${type}`),
+    //     text: document.querySelector(`#prize-count-${type}`),
+    //   };
+    //   prizeElement[type] = elements;
+    // }
 
     if (!prizeElement.prizeType) {
       prizeElement.prizeType = document.querySelector("#prizeType");
@@ -223,23 +230,24 @@ let setPrizeData = (function () {
       prizeElement.prizeText = document.querySelector("#prizeText");
     }
 
-    if (isInit) {
-      for (let i = prizes.length - 1; i > currentPrizeIndex; i--) {
-        let type = prizes[i]["type"];
-        document.querySelector(`#prize-item-${type}`).className =
-          "prize-item done";
-        document.querySelector(`#prize-bar-${type}`).style.width = "0";
-        document.querySelector(`#prize-count-${type}`).textContent =
-          "0" + "/" + prizes[i]["count"];
-      }
-    }
+    // if (isInit) {
+    //   for (let i = prizes.length - 1; i > currentPrizeIndex; i--) {
+    //     let type = prizes[i]["type"];
+    //     document.querySelector(`#prize-item-${type}`).className =
+    //       "prize-item done";
+    //     document.querySelector(`#prize-bar-${type}`).style.width = "0";
+    //     document.querySelector(`#prize-count-${type}`).textContent =
+    //       "0" + "/" + prizes[i]["count"];
+    //   }
+    // }
 
     if (lasetPrizeIndex !== currentPrizeIndex) {
-      let lastPrize = prizes[lasetPrizeIndex],
-        lastBox = document.querySelector(`#prize-item-${lastPrize.type}`);
-      lastBox.classList.remove("shine");
-      lastBox.classList.add("done");
-      elements.box && elements.box.classList.add("shine");
+      let lastPrize = prizes[lasetPrizeIndex];
+      // let lastPrize = prizes[lasetPrizeIndex],
+      //   lastBox = document.querySelector(`#prize-item-${lastPrize.type}`);
+      // lastBox.classList.remove("shine");
+      // lastBox.classList.add("done");
+      // elements.box && elements.box.classList.add("shine");
       prizeElement.prizeType.textContent = currentPrize.text;
       prizeElement.prizeText.textContent = currentPrize.title;
 
@@ -255,9 +263,9 @@ let setPrizeData = (function () {
 
     count = totalCount - count;
     count = count < 0 ? 0 : count;
-    let percent = (count / totalCount).toFixed(2);
-    elements.bar && (elements.bar.style.width = percent * 100 + "%");
-    elements.text && (elements.text.textContent = count + "/" + totalCount);
+    // let percent = (count / totalCount).toFixed(2);
+    // elements.bar && (elements.bar.style.width = percent * 100 + "%");
+    // elements.text && (elements.text.textContent = count + "/" + totalCount);
     prizeElement.prizeLeft.textContent = count;
   };
 })();
@@ -271,7 +279,7 @@ function startMaoPao() {
 
   function restart() {
     total = 0;
-    danmuList.forEach(item => {
+    danmuList.forEach((item) => {
       let text =
         lastDanMuList.length > 0
           ? lastDanMuList.shift()
@@ -291,7 +299,7 @@ function startMaoPao() {
               this.start(DEFAULT_MESS[index++]);
               index = index > len ? 0 : index;
             }, 1000);
-          }
+          },
         })
       );
       index = index > len ? 0 : index;
@@ -310,5 +318,5 @@ export {
   addDanMu,
   setPrizes,
   resetPrize,
-  addQipao
+  addQipao,
 };

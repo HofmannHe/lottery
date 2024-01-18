@@ -11,5 +11,6 @@ services:
       - "28458:8888"
     volumes:
       - "lottery_log:/var/log"
-    image: "panda1024/lottery:v0.3"
+      - "./server/data:/lottery/server/data"
+    image: "test:latest"
     restart: always
