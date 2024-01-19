@@ -73,12 +73,6 @@ const prizes = [
   }
 ];
 
-/**
- * 卡片公司名称标识
- */
-const COMPANY = "SMEE";
-
 module.exports = {
   prizes,
-  COMPANY
 };

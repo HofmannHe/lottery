@@ -23,7 +23,6 @@ let TOTAL_CARDS,
   prizes,
   ROW_COUNT = 7,
   COLUMN_COUNT = 17,
-  COMPANY,
   HIGHLIGHT_CELL = [],
   // 当前的比例
   Resolution = 1;
@@ -67,7 +66,6 @@ function initAll() {
     success(data) {
       // 获取基础数据
       prizes = data.cfgData.prizes;
-      COMPANY = data.cfgData.COMPANY;
       HIGHLIGHT_CELL = createHighlight();
       basicData.prizes = prizes;
       setPrizes(prizes);
@@ -349,9 +347,6 @@ function createCard(user, isBold, id, showTable) {
     element.style.backgroundColor =
       "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
   }
-
-  //添加公司标识
-  // element.appendChild(createElement("company", COMPANY));
 
   element.appendChild(createElement("name", user[1]));
   element.appendChild(createElement("details", user[0]));
@@ -713,9 +708,6 @@ function random(num) {
 function changeCard(cardIndex, user) {
   let card = threeDCards[cardIndex].element;
 
-  // card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
-  //   user[1]
-  // }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
   card.innerHTML = `<div class="name">${user[1]}</div><div class="details">${user[0]}</div>`;
 }
 
