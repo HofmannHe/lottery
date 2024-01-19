@@ -500,6 +500,9 @@ function selectCard(duration = 600) {
     l = selectedCardIndex.length;
 
     columns = Math.ceil(currentLuckys.length / 5);
+    if (columns > 6) {
+      columns = 6
+    }
 
     let displayColumns = columns > currentLuckys.length ? currentLuckys.length : columns;
     let displayRows = Math.ceil(currentLuckys.length / displayColumns);
