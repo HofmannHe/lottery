@@ -13,8 +13,6 @@ const {
   saveErrorDataFile
 } = require("./help");
 
-let cfg = {};
-
 let app = express(),
   router = express.Router(),
   cwd = process.cwd(),
@@ -68,7 +66,7 @@ app.post("*", (req, res, next) => {
 router.post("/getTempData", (req, res, next) => {
   getLeftUsers();
   res.json({
-    cfgData: cfg,
+    cfgData: curData,
     leftUsers: curData.leftUsers,
     luckyData: luckyData
   });
@@ -78,6 +76,8 @@ router.post("/getTempData", (req, res, next) => {
 router.post("/reset", (req, res, next) => {
   luckyData = {};
   errorData = [];
+  loadPrizeData();
+  loadUserData();
   log(`重置数据成功`);
   saveErrorDataFile(errorData);
   return saveDataFile(luckyData).then(data => {
@@ -95,7 +95,7 @@ router.post("/getUsers", (req, res, next) => {
 
 // 获取奖品信息
 router.post("/getPrizes", (req, res, next) => {
-  // res.json(curData.prize);
+  res.json(curData.prize);
   log(`成功返回奖品数据`);
 });
 
@@ -138,7 +138,7 @@ router.post("/errorData", (req, res, next) => {
 // 保存数据到excel中去
 router.post("/export", (req, res, next) => {
   let outData = [["工号", "姓名", "部门"]];
-  cfg.prizes.forEach(item => {
+  curData.prizes.forEach(item => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
   });
@@ -202,22 +202,34 @@ function setErrorData(data) {
 
 app.use(router);
 
-function loadData() {
+function loadPrizeData() {
+
+  console.log("加载奖品列表数据文件");
+
   let prizes_data = {};
 
   const sheet2JSONOpts = {
     defval: ''//给defval赋值为空的字符串
   }
 
-  console.log("加载奖品列表数据文件");
   prizes_data = XLSX.readFile(path.join(dataBath, "data/prizes.xlsx")).Sheets.Sheet1;
-  cfg.prizes = XLSX.utils.sheet_to_json(prizes_data, sheet2JSONOpts)
-  console.log(cfg.prizes);
+  curData.prizes = XLSX.utils.sheet_to_json(prizes_data, sheet2JSONOpts)
 
+  console.log(curData.prizes);
+
+}
+
+function loadUserData() {
   console.log("加载用户列表数据文件");
   curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
   // 重新洗牌
   shuffle(curData.users);
+}
+
+function loadData() {
+  loadPrizeData();
+
+  loadUserData();
 
   // 读取已经抽取的结果
   loadTempData()

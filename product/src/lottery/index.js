@@ -12,7 +12,6 @@ import { NUMBER_MATRIX } from "./config.js";
 
 const ROTATE_TIME = 3000;
 const ROTATE_LOOP = 1000;
-const BASE_HEIGHT = 1080;
 
 let TOTAL_CARDS,
   btns = {
@@ -243,6 +242,7 @@ function bindEvent() {
         addHighlight();
         resetCard();
         // 重置所有数据
+        basicData.prizes = prizes;
         currentLuckys = [];
         basicData.leftUsers = Object.assign([], basicData.users);
         basicData.luckyUsers = {};
@@ -496,6 +496,10 @@ function selectCard(duration = 600) {
 
     if (columns < 6) {
       columns = 6
+    }
+
+    if (columns > 13) {
+      columns = 13
     }
 
     let displayColumns = columns > currentLuckys.length ? currentLuckys.length : columns;
