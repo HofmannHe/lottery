@@ -495,11 +495,10 @@ function selectCard(duration = 600) {
 
   let width = 80,
     height = 80,
-    columns = 10,
+    columns = Math.ceil(currentLuckys.length / 5),
     locates = [],
     l = selectedCardIndex.length;
 
-    columns = Math.ceil(currentLuckys.length / 5);
     if (columns > 6) {
       columns = 6
     }
