@@ -2,8 +2,7 @@ const express = require("express");
 const opn = require("opn");
 const bodyParser = require("body-parser");
 const path = require("path");
-const chokidar = require("chokidar");
-const cfg = require("./config");
+const XLSX = require("xlsx");
 
 const {
   loadXML,
@@ -14,6 +13,8 @@ const {
   saveErrorDataFile
 } = require("./help");
 
+let cfg = {};
+
 let app = express(),
   router = express.Router(),
   cwd = process.cwd(),
@@ -22,7 +23,6 @@ let app = express(),
   curData = {},
   luckyData = {},
   errorData = [],
-  defaultType = cfg.prizes[0]["type"],
   defaultPage = `default data`;
 
 //这里指定参数使用 json 格式
@@ -137,8 +137,7 @@ router.post("/errorData", (req, res, next) => {
 
 // 保存数据到excel中去
 router.post("/export", (req, res, next) => {
-  let type = [1, 2, 3, 4, 5, defaultType],
-    outData = [["工号", "姓名", "部门"]];
+  let outData = [["工号", "姓名", "部门"]];
   cfg.prizes.forEach(item => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
@@ -204,7 +203,16 @@ function setErrorData(data) {
 app.use(router);
 
 function loadData() {
-  let cfgData = {};
+  let prizes_data = {};
+
+  const sheet2JSONOpts = {
+    defval: ''//给defval赋值为空的字符串
+  }
+
+  console.log("加载奖品列表数据文件");
+  prizes_data = XLSX.readFile(path.join(dataBath, "data/prizes.xlsx")).Sheets.Sheet1;
+  cfg.prizes = XLSX.utils.sheet_to_json(prizes_data, sheet2JSONOpts)
+  console.log(cfg.prizes);
 
   console.log("加载用户列表数据文件");
   curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
