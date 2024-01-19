@@ -74,7 +74,7 @@ router.post("/getTempData", (req, res, next) => {
   });
 });
 
-// 获取所有用户
+// 重置所有用户
 router.post("/reset", (req, res, next) => {
   luckyData = {};
   errorData = [];
@@ -204,10 +204,9 @@ function setErrorData(data) {
 app.use(router);
 
 function loadData() {
-  console.log("加载EXCEL数据文件");
   let cfgData = {};
 
-  // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
+  console.log("加载用户列表数据文件");
   curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
   // 重新洗牌
   shuffle(curData.users);

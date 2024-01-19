@@ -21,7 +21,6 @@ let TOTAL_CARDS,
     lottery: document.querySelector("#lottery"),
   },
   prizes,
-  EACH_COUNT,
   ROW_COUNT = 7,
   COLUMN_COUNT = 17,
   COMPANY,
@@ -68,7 +67,6 @@ function initAll() {
     success(data) {
       // 获取基础数据
       prizes = data.cfgData.prizes;
-      EACH_COUNT = data.cfgData.EACH_COUNT;
       COMPANY = data.cfgData.COMPANY;
       HIGHLIGHT_CELL = createHighlight();
       basicData.prizes = prizes;
@@ -628,7 +626,7 @@ function lottery() {
     currentLuckys = [];
     selectedCardIndex = [];
     // 当前同时抽取的数目,当前奖品抽完还可以继续抽，但是不记录数据
-    let perCount = EACH_COUNT[currentPrizeIndex],
+    let perCount = currentPrize.extract_count,
       luckyData = basicData.luckyUsers[currentPrize.type],
       leftCount = basicData.leftUsers.length,
       leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0);
@@ -694,7 +692,7 @@ function saveData() {
 
 function changePrize() {
   let luckys = basicData.luckyUsers[currentPrize.type];
-  let luckyCount = (luckys ? luckys.length : 0) + EACH_COUNT[currentPrizeIndex];
+  let luckyCount = (luckys ? luckys.length : 0) + currentPrize.extract_count;
   // 修改左侧prize的数目和百分比
   setPrizeData(currentPrizeIndex, luckyCount);
 }
