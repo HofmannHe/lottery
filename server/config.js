@@ -43,21 +43,21 @@ const prizes = [
   },
   {
     type: 5,
-    count: 50,
+    count: 120,
     text: "四等奖",
     title: "",
     img: ""
   },
   {
     type: 6,
-    count: 100,
+    count: 200,
     text: "五等奖",
     title: "",
     img: ""
   },
   {
     type: 7,
-    count: 200,
+    count: 600,
     text: "阳光普照奖",
     title: "",
     img: ""
@@ -67,7 +67,7 @@ const prizes = [
 /**
  * 一次抽取的奖品个数与prizes对应
  */
-const EACH_COUNT = [1, 2, 3, 7, 12, 15, 35, 50];
+const EACH_COUNT = [1, 2, 3, 7, 12, 60, 50, 60];
 
 /**
  * 卡片公司名称标识

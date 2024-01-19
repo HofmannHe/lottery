@@ -494,11 +494,14 @@ function splitRangeIntoParts(start, end, parts) {
 
 function selectCard(duration = 600) {
   rotate = false;
+
   let width = 80,
     height = 80,
     columns = 10,
     locates = [],
     l = selectedCardIndex.length;
+
+    columns = Math.ceil(currentLuckys.length / 5);
 
     let displayColumns = columns > currentLuckys.length ? currentLuckys.length : columns;
     let displayRows = Math.ceil(currentLuckys.length / displayColumns);

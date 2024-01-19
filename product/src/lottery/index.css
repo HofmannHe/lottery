@@ -21,7 +21,6 @@ a {
 #container {
   z-index: 3;
   position: relative;
-  margin: 0 15vh;
 }
 
 #menu {
