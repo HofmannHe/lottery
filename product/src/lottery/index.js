@@ -499,7 +499,7 @@ function selectCard(duration = 600) {
     locates = [],
     l = selectedCardIndex.length;
 
-    if (columns > 6) {
+    if (columns < 6) {
       columns = 6
     }
 
