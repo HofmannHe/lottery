@@ -498,8 +498,8 @@ function selectCard(duration = 600) {
       columns = 6
     }
 
-    if (columns > 13) {
-      columns = 13
+    if (columns > 12) {
+      columns = 12
     }
 
     let displayColumns = columns > currentLuckys.length ? currentLuckys.length : columns;
@@ -508,7 +508,7 @@ function selectCard(duration = 600) {
     for (let i = 0; i < displayRows; i++) {
       for (let j = 0; j < displayColumns; j++) {
         locates.push({
-          x: (j - (displayColumns - 1) / 2) * width * Resolution * columns / displayColumns,
+          x: (j - (displayColumns - 1) / 2) * width * Resolution * (columns / displayColumns),
           y: ((displayRows - 1) / 2 - i) * height * Resolution,
         });
       }

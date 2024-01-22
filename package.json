@@ -1,0 +1,26 @@
+{
+  "name": "lottery",
+  "version": "1.0.0",
+  "description": "lottery",
+  "main": "index.js",
+  "bin": {
+    "http-mini": "index.js"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "package": "electron-packager ./ lottery  --out ./lottery-release --overwrite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "config": {
+    "electron": {
+      "mirror": "https://registry.npmmirror.com/-/binary/electron/"
+    }
+  },
+  "author": "Hofmann",
+  "dependencies": {
+    "electron": "^28.1.4"
+  },
+  "devDependencies": {
+    "electron": "^28.1.4"
+  }
+}
